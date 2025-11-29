@@ -41,7 +41,7 @@ void correr(Corredor& meuCorredor, int tamPista, vector<int> &posicoesCorredores
             passos = meuCorredor.darPasso(gerador);
         }
 
-        // Se o corredor teve azar e não correu, guarda 'X' na respectiva posição dele no vetor de estados para simular visualmente
+        // Atribui o estado visual do corredor com base no resultado do passo
         if (meuCorredor.eliminado) {
             estadosCorredores[meuCorredor.id] = '#'; // Eliminado
         } else if (passos == 0) {
@@ -156,7 +156,7 @@ void impressao_pista(int tamPista, int nCorredores, const vector<int>& posicoesC
 
         // Desenha o "avatar"
         if (posicoesCorredores[i] < tamPista) {
-            cout << estadosCorredores[i]; // Correndo
+            cout << estadosCorredores[i]; // Em movimento, tropeçou ou eliminado
         } else {
             cout << "F"; // Finalizou
         }
@@ -202,6 +202,7 @@ void limpa_terminal(int opcaoSistema) {
 
 /*
     Função para gerar corredores com atributos aleatórios
+
     @param nCorredores: Número de corredores a serem gerados
     @return: Vetor de corredores (objetos) gerados
 */
@@ -218,7 +219,7 @@ vector<Corredor> gera_corredores(int nCorredores) {
         double resist = distResistencia(gerador);
 
         // Cria o corredor e coloca no vetor
-        corredores.emplace_back(i, vMin, vMax, resist); // Obs.: não precisa passar o 'eliminado', que é definido false por padrão
+        corredores.emplace_back(i, vMin, vMax, resist); // Obs.: não é preciso passar 'eliminado' ou 'turnosParado', pois o construtor já inicializa
         
         // Mostra os atributos para o usuário
         corredores.back().mostrarAtributos();
@@ -264,8 +265,8 @@ int main(void) {
     // Criação dos corredores (objetos) com atributos aleatórios
     vector<Corredor> listaCorredores = gera_corredores(nCorredores);
 
-    // Para manter controle das posições
-    vector<int> posicoesCorredores(nCorredores + 1, 0);
+   
+    vector<int> posicoesCorredores(nCorredores + 1, 0); // Vetor para manter controle das posições
     vector<thread> threadsCorredores; // Vetor para armazenar as threads dos corredores
     vector<char> estadosCorredores(nCorredores + 1, '>'); // Vetor para armazenar os estados visuais dos corredores. Inicializa "em movimento"
 
