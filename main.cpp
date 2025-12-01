@@ -1,3 +1,7 @@
+/* Código desenvolvido pelos alunos:
+    Daniel Jorge Manzano - N°USP: 15446861
+    Nicolas Amaral dos Santos - N°USP: 16304033 */
+
 #include <thread>
 #include <mutex>
 #include <iostream>
@@ -265,7 +269,6 @@ int main(void) {
     // Criação dos corredores (objetos) com atributos aleatórios
     vector<Corredor> listaCorredores = gera_corredores(nCorredores);
 
-   
     vector<int> posicoesCorredores(nCorredores + 1, 0); // Vetor para manter controle das posições
     vector<thread> threadsCorredores; // Vetor para armazenar as threads dos corredores
     vector<char> estadosCorredores(nCorredores + 1, '>'); // Vetor para armazenar os estados visuais dos corredores. Inicializa "em movimento"
